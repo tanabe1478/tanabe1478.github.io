@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content"><channel><title>t__nabe1478's Blog</title><description>t__nabe1478のブログです。務め先のブログには書けない程度の技術に関するものや私事について書きます。</description><link>https://tanabe1478.com</link><language>en</language><lastBuildDate>Sun, 29 Nov 2020 23:08:19 +0900</lastBuildDate><pubDate>Sun, 29 Nov 2020 23:08:19 +0900</pubDate><ttl>250</ttl><atom:link href="https://tanabe1478.com/feed.rss" rel="self" type="application/rss+xml"/><item><guid isPermaLink="true">https://tanabe1478.com/posts/%E3%81%93%E3%81%AE%E3%83%95%E3%82%99%E3%83%AD%E3%82%AF%E3%82%99%E3%81%AE%E6%A7%8B%E6%88%90</guid><title>このブログの構成</title><description>このブログがどうやって出来ているか</description><link>https://tanabe1478.com/posts/%E3%81%93%E3%81%AE%E3%83%95%E3%82%99%E3%83%AD%E3%82%AF%E3%82%99%E3%81%AE%E6%A7%8B%E6%88%90</link><pubDate>Sun, 29 Nov 2020 21:40:00 +0900</pubDate><content:encoded><![CDATA[<h1>このブログの構成</h1><p>静的なファイルの生成にはSwift製のPublishを使っている。</p>]]></content:encoded></item><item><guid isPermaLink="true">https://tanabe1478.com/posts/Swift53%E3%81%A6%E3%82%99%E3%81%AFProtocol%E3%81%AFProperty%20wrappers%E3%82%92requirements%E3%81%AB%E6%8C%87%E5%AE%9A%E3%81%A6%E3%82%99%E3%81%8D%E3%81%AA%E3%81%84</guid><title>Swift5.3ではProtocolはPropertywrappersをrequirementsに指定できない</title><description>Combineとprotocolの話</description><link>https://tanabe1478.com/posts/Swift53%E3%81%A6%E3%82%99%E3%81%AFProtocol%E3%81%AFProperty%20wrappers%E3%82%92requirements%E3%81%AB%E6%8C%87%E5%AE%9A%E3%81%A6%E3%82%99%E3%81%8D%E3%81%AA%E3%81%84</link><pubDate>Sun, 29 Nov 2020 20:40:00 +0900</pubDate><content:encoded><![CDATA[<h1>Swift5.3ではProtocolはPropertywrappersをrequirementsに指定できない</h1><p>WWDC2019で発表されたCombineですが、SwiftUIと組み合わせて使用しやすいよう設計されているように感じますが、UIKitを使用しているアプリで使用できないわけではありません。不足しているUIKitのPublisherを提供するCombineCocoaなども提供されています。</p><p><a href="https://github.com/CombineCommunity/CombineCocoa">CombineCommunity/CombineCocoa</a></p><p>Combineを案件で使っていて困ったことを小ネタですが記事にします。</p><h2>Property <code>xxx</code> declared inside a protocol cannot have a wrapper</h2><p>DI出来るようにモジュールを設計する時にprotocolで抽象を表現して利用する側はprotoclに依存させようとしました。DIコンテナ経由で初期化したい時に<code>@Publish</code>が付いたプロパティを宣言したくて試しに付けてみたらコンパイルエラーになりました。</p><pre><code class="language-swift">protocol PrinterDiscoverable {
+    @Published var token: String? { get set }
+    func discover()
+}
+</code></pre><pre><code class="language-bash">Property 'token' declared inside a protocol cannot have a wrapper
+</code></pre><h2>Publisherについて</h2><p>Published attribute について知る前にPublisherについて知っておく必要があります。PublisherはCombineの用語でイベントを送信するオブジェクトのことを指します。PublisherをsubscribeしてSubscriberはイベントを受信できます。</p><pre><code class="language-swift">public struct Publisher : Publisher {
+    public typealias Output = Wrapped
+    public typealias Failure = Never
+    public let output: Optional&lt;Wrapped&gt;.Publisher.Output?
+    public init(_ output: Optional&lt;Wrapped&gt;.Publisher.Output?)
+    public func receive&lt;S&gt;(subscriber: S) where Wrapped == S.Input, S : Subscriber, S.Failure == Never
+}
+</code></pre><p>Publisherのドキュメントは以下です。</p><p><a href="https://developer.apple.com/documentation/combine/publisher">Apple Developer Documentation</a></p><p>SwifftのSequence protocolに生えているpublisherというプロパティを使ってPublisherの動作を見ます。</p><pre><code class="language-swift">import Combine
+
+let publisher = [1, 2, 3, 4, 5, 6].publisher
+var subscriptions = Set&lt;AnyCancellable&gt;()
+
+publisher.sink(receiveCompletion: { completion in
+    print("completed: \(completion)")
+}, receiveValue: { value in
+    print("received: \(value)")
+}).store(in: &amp;subscriptions)
+</code></pre><p>Sequence protocolに準拠しているArrayからPublisherを生成してそれをsubscribeします。Publisherは要素を順番にPublisherして最後にfinished をpublishしています。</p><pre><code class="language-bash">received: 1
+received: 2
+received: 3
+received: 4
+received: 5
+received: 6
+completed: finished
+</code></pre><h2><code>@Published</code>について</h2><p>Property Wrappersという機能を使っていて、このattributeが付与されたプロパティをPublisherにすることができます。</p><p>@Published`に関するドキュメントは以下です。</p><p><a href="https://developer.apple.com/documentation/combine/published">Apple Developer Documentation</a></p><p>Property wrappersについては一度記事を書いたことがあります。</p><p><a href="https://dev.classmethod.jp/articles/property-wrappers/">腑に落ちるまでProperty wrappers | Developers.IO</a></p><p>これにより普通のプロパティからPublisherを生成できて楽です。Combineの恩恵を感じながら実装を続けていたのですが実装後に抽象化する時にprotocol側で<code>@Published</code>を付与したプロパティをprotocolのrequirementsに含めようとすると先程のコンパイルエラーに遭遇しました。</p><h2>Swift5.3ではProtocolはProperty wrappersをrequirementsに指定できない</h2><p>Swift5.2、5.3ではプロトコル内でのProperty Wrappersの宣言をサポートしていません。しかし実装はしないといけないので少しコードを修正して同じ要件を満たすようにしました。</p><p>利用者側のコードをまず見てみます。</p><pre><code class="language-swift">printerDiscovery.token.sink { [weak self] value in
+    guard let token = value else { return }
+    target = token
+    self?.showNext(token: token)
+}.store(in: &amp;subscriptions)
+</code></pre><p>@Publishedが付与されたtokenのprojected valueを使ってpublisherをsubscribeしています。つまり今回の場合利用者側で実際に必要なのはPublisherで、@Publishedが付与されたproperty wrapperではないです。</p><p>そこでprotocolを以下のように書きかえます。</p><pre><code class="language-swift">protocol PrinterDiscoverable {
+    var tokenPublisher: Published&lt;String?&gt;.Publisher { get }
+    func discover()
+}
+</code></pre><p>protocolに準拠する側の実装は以下のようにします。とあるプリンタのプロプライエタリなSDKで規約上実装を公開してはいけないので命名をこちらで変更しています。</p><pre><code class="language-swift">struct PrinterDiscovery: NSObject, DiscoveryDelegate, PrinterDiscoverable {
+    @Published private(set) var token: String?
+    var tokenPublished: Published&lt;String?&gt; { _token }
+    var tokenPublisher: Published&lt;String?&gt;.Publisher { $token }
+
+    private var printerList: [DeviceInfo] = []
+    private var filterOption = Epos2FilterOption()
+
+    func discover() {
+        filterOption.deviceType = TYPE_PRINTER.rawValue
+        let result = Discovery.start(filterOption, delegate: self)
+    }
+
+    func onDiscovery(_ deviceInfo: Epos2DeviceInfo!) {
+        printerList.append(deviceInfo)
+        token = printerList.first?.target ?? "取得失敗"
+    }
+}
+</code></pre><p>利用する側もコードの修正が必要になります。</p><pre><code class="language-swift">printerDiscovery.tokenPublisher.sink { [weak self] value in
+    guard let token = value else { return }
+    target = token
+    self?.showNext(token: token)
+}.store(in: &amp;subscriptions)
+</code></pre><p>このワークアラウンドを使って@Pubhlishedなproperty wrapperを公開している実装も見かけました。以下のようにprotocolを宣言していました。</p><pre><code class="language-swift">// protocol
+protocol PrinterDiscoverable {
+    var token: String { get }
+    var tokenPublisher: Published&lt;String?&gt;.Publisher { get }
+    var tokenPublished: Published&lt;String?&gt;. { get }
+    func discover()
+}
+</code></pre><p>この実装は以下のリンクなどで触れられています。</p><p><a href="https://stackoverflow.com/questions/57517320/how-to-define-a-protocol-to-include-a-property-with-published-property-wrapper">How to define a protocol to include a property with @Published property wrapper</a></p><p><a href="https://medium.com/swlh/how-to-define-a-protocol-with-published-property-wrapper-type-1b6349097064">How to Define a Protocol With @Published Property Wrapper Type</a></p><h2>まとめ</h2><p>運良く実務でCombineを使うことができているのでハマりながらこのフレームワークに慣れていければと思います。もっと良い解決方法等何かご意見がある場合はコメントかTwitterの方からご連絡いただければと思います。最後まで読んでいただいてありがとうございました。</p><h2>参考にした記事</h2><p><a href="https://qiita.com/shiz/items/5efac86479db77a52ccc">【iOS】Combineフレームワークまとめ - Qiita</a></p><p><a href="https://medium.com/@shiba1014/swift%E3%81%AEcombine%E3%82%92%E7%9F%A5%E3%82%8B-fad8e3d902fe">SwiftのCombineを知る</a></p>]]></content:encoded></item></channel></rss>
