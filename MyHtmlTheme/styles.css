@@ -10,7 +10,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    line-height: 1.8;
 }
 
 body {
@@ -78,12 +77,13 @@ h3 {
     margin-top: 20px;
 }
 
-p {
+.content p {
     display: block;
     margin-block-start: 1em;
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
+    line-height: 1.8;
 }
 
 a {
