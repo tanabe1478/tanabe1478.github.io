@@ -143,7 +143,7 @@ a {
 }
 
 .content img {
-    width: 700px;
+    max-width: 100%;
     height: auto;
 }
 
@@ -163,16 +163,40 @@ footer {
     color: #8a8a8a;
 }
 
+.youtube {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+}
+.youtube iframe {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
 @media (min-width: 1200px) {
     .content {
         font-size: 17.0px;
     }
+    
+    .content img {
+        width: 700px;
+    }
+
 }
 
 @media (min-width: 1000px) {
     .content {
         font-size: 1.2vw;
     }
+    
+    .content img {
+        width: 700px;
+    }
+
 }
 
 @media (prefers-color-scheme: dark) {
