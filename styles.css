@@ -4,10 +4,13 @@
 *  MIT license, see LICENSE file for details
 */
 
+
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    line-height: 1.8;
 }
 
 body {
@@ -76,7 +79,11 @@ h3 {
 }
 
 p {
-    margin-bottom: 10px;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
 }
 
 a {
@@ -135,6 +142,12 @@ a {
     margin-bottom: 40px;
 }
 
+.content img {
+    width: 700px;
+    height: auto;
+}
+
+
 .browse-all {
     display: block;
     margin-bottom: 30px;
@@ -148,6 +161,18 @@ a {
 
 footer {
     color: #8a8a8a;
+}
+
+@media (min-width: 1200px) {
+    html {
+        font-size: 19.0px;
+    }
+}
+
+@media (min-width: 1000px) {
+    html {
+        font-size: 1.4vw;
+    }
 }
 
 @media (prefers-color-scheme: dark) {
