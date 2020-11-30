@@ -164,13 +164,13 @@ footer {
 }
 
 @media (min-width: 1200px) {
-    html {
+    .content {
         font-size: 19.0px;
     }
 }
 
 @media (min-width: 1000px) {
-    html {
+    .content {
         font-size: 1.4vw;
     }
 }
