@@ -177,26 +177,29 @@ footer {
 }
 
 
+
 @media (min-width: 1200px) {
-    .content {
-        font-size: 17.0px;
-    }
-    
     .content img {
         width: 700px;
     }
-
 }
 
+
 @media (min-width: 1000px) {
-    .content {
-        font-size: 1.2vw;
-    }
-    
     .content img {
         width: 700px;
     }
+}
 
+@media screen and (min-width: 768px) {
+（ここにPC用スタイルを記述）
+.content {
+    font-size: 15.0px;
+}
+}
+ 
+@media screen and (max-width: 767px) {
+（ここにモバイル用スタイルを記述）
 }
 
 @media (prefers-color-scheme: dark) {
@@ -236,15 +239,6 @@ pre code {
     white-space: pre;
     -webkit-overflow-scrolling: touch;
 }
-
-@media (prefers-color-scheme: dark)
-pre code {
-    background-color: #000;
-    color: #fff;
-}
-
-
-
 /**
  * MARK: Highlight JS
  */
