@@ -176,6 +176,21 @@ footer {
   height: 100%;
 }
 
+blockquote{
+    position:relative;
+    border-left:3px solid #c0c0c0;
+    padding-left:10px;
+}
+blockquote:before{
+    position:absolute;
+    font-size: 20px;
+    color:#c0c0c0;
+}
+blockquote p{
+    position:relative;
+    padding-left:30px;
+}
+
 
 
 @media (min-width: 1200px) {
