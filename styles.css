@@ -1,0 +1,455 @@
+/**
+*  Publish Foundation theme
+*  Copyright (c) John Sundell 2019
+*  MIT license, see LICENSE file for details
+*/
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #fff;
+    color: #000;
+    font-family: Helvetica, Arial;
+    text-align: center;
+}
+
+.wrapper {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 40px;
+    text-align: left;
+}
+
+header {
+    background-color: #eee;
+}
+
+header .wrapper {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+}
+
+header a {
+    text-decoration: none;
+}
+
+header .site-name {
+    font-size: 1.5em;
+    color: #000;
+    font-weight: bold;
+}
+
+nav {
+    margin-top: 20px;
+}
+
+nav li {
+    display: inline-block;
+    margin: 0 7px;
+    line-height: 1.5em;
+}
+
+nav li a.selected {
+    text-decoration: underline;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+h2 {
+    margin: 20px 0;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+h3 {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.content p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    line-height: 1.8;
+}
+
+a {
+    color: inherit;
+}
+
+.description {
+    margin-bottom: 40px;
+}
+
+.item-list > li {
+    display: block;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #eee;
+    margin-bottom: 20px;
+}
+
+.item-list > li:last-child {
+    margin-bottom: 0;
+}
+
+.item-list h1 {
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.item-list p {
+    margin-bottom: 0;
+}
+
+.tag-list {
+    margin-bottom: 15px;
+}
+
+.tag-list li,
+.tag {
+    display: inline-block;
+    background-color: #000;
+    color: #ddd;
+    padding: 4px 6px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.tag-list a,
+.tag a {
+    text-decoration: none;
+}
+
+.item-page .tag-list {
+    display: inline-block;
+}
+
+.content {
+    margin-bottom: 40px;
+}
+
+.content img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+.browse-all {
+    display: block;
+    margin-bottom: 30px;
+}
+
+.all-tags li {
+    font-size: 1.4em;
+    margin-right: 10px;
+    padding: 6px 10px;
+}
+
+footer {
+    color: #8a8a8a;
+}
+
+.youtube {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+}
+.youtube iframe {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+blockquote{
+    position:relative;
+    border-left:3px solid #c0c0c0;
+    padding-left:10px;
+}
+blockquote:before{
+    position:absolute;
+    font-size: 20px;
+    color:#c0c0c0;
+}
+blockquote p{
+    position:relative;
+    padding-left:30px;
+}
+
+
+
+@media (min-width: 1200px) {
+    .content img {
+        width: 700px;
+    }
+}
+
+
+@media (min-width: 1000px) {
+    .content img {
+        width: 700px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+（ここにPC用スタイルを記述）
+.content {
+    font-size: 15.0px;
+}
+}
+ 
+@media screen and (max-width: 767px) {
+（ここにモバイル用スタイルを記述）
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #222;
+    }
+
+    body,
+    header .site-name {
+        color: #ddd;
+    }
+
+    .item-list > li {
+        background-color: #333;
+    }
+
+    header {
+        background-color: #000;
+    }
+}
+
+@media(max-width: 600px) {
+    .wrapper {
+        padding: 40px 20px;
+    }
+}
+
+pre code {
+    display: block;
+    background-color: #000;
+    padding: 15px 20px;
+    border-radius: 12px;
+    color: #fff;
+    line-height: 1.4em;
+    font-size: 0.95em;
+    overflow-x: auto;
+    white-space: pre;
+    -webkit-overflow-scrolling: touch;
+}
+/**
+ * MARK: Highlight JS
+ */
+
+/*
+
+ Atom One Light by Daniel Gamage
+ Original One Light Syntax theme from https://github.com/atom/one-light-syntax
+
+ base:    #fafafa
+ mono-1:  #383a42
+ mono-2:  #686b77
+ mono-3:  #a0a1a7
+ hue-1:   #0184bb
+ hue-2:   #4078f2
+ hue-3:   #a626a4
+ hue-4:   #50a14f
+ hue-5:   #e45649
+ hue-5-2: #c91243
+ hue-6:   #986801
+ hue-6-2: #c18401
+
+ */
+
+.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    color: #383a42;
+    background: #fafafa;
+}
+
+.hljs-comment,
+.hljs-quote {
+    color: #a0a1a7;
+    font-style: italic;
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+    color: #a626a4;
+}
+
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+    color: #e45649;
+}
+
+.hljs-literal {
+    color: #0184bb;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+    color: #50a14f;
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+    color: #c18401;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+    color: #986801;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+    color: #4078f2;
+}
+
+.hljs-emphasis {
+    font-style: italic;
+}
+
+.hljs-strong {
+    font-weight: bold;
+}
+
+.hljs-link {
+    text-decoration: underline;
+}
+
+@media (prefers-color-scheme: dark) {
+    /*
+
+     Atom One Dark by Daniel Gamage
+     Original One Dark Syntax theme from https://github.com/atom/one-dark-syntax
+
+     base:    #282c34
+     mono-1:  #abb2bf
+     mono-2:  #818896
+     mono-3:  #5c6370
+     hue-1:   #56b6c2
+     hue-2:   #61aeee
+     hue-3:   #c678dd
+     hue-4:   #98c379
+     hue-5:   #e06c75
+     hue-5-2: #be5046
+     hue-6:   #d19a66
+     hue-6-2: #e6c07b
+
+     */
+
+    .hljs {
+        display: block;
+        overflow-x: auto;
+        padding: 0.5em;
+        color: #abb2bf;
+        background: #282c34;
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+        color: #5c6370;
+        font-style: italic;
+    }
+
+    .hljs-doctag,
+    .hljs-keyword,
+    .hljs-formula {
+        color: #c678dd;
+    }
+
+    .hljs-section,
+    .hljs-name,
+    .hljs-selector-tag,
+    .hljs-deletion,
+    .hljs-subst {
+        color: #e06c75;
+    }
+
+    .hljs-literal {
+        color: #56b6c2;
+    }
+
+    .hljs-string,
+    .hljs-regexp,
+    .hljs-addition,
+    .hljs-attribute,
+    .hljs-meta-string {
+        color: #98c379;
+    }
+
+    .hljs-built_in,
+    .hljs-class .hljs-title {
+        color: #e6c07b;
+    }
+
+    .hljs-attr,
+    .hljs-variable,
+    .hljs-template-variable,
+    .hljs-type,
+    .hljs-selector-class,
+    .hljs-selector-attr,
+    .hljs-selector-pseudo,
+    .hljs-number {
+        color: #d19a66;
+    }
+
+    .hljs-symbol,
+    .hljs-bullet,
+    .hljs-link,
+    .hljs-meta,
+    .hljs-selector-id,
+    .hljs-title {
+        color: #61aeee;
+    }
+
+    .hljs-emphasis {
+        font-style: italic;
+    }
+
+    .hljs-strong {
+        font-weight: bold;
+    }
+
+    .hljs-link {
+        text-decoration: underline;
+    }
+}
