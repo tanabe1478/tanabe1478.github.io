@@ -100,14 +100,6 @@ nav a.selected {
     width: 1.1rem;
 }
 
-.company-link {
-    font-size: 0.95rem;
-}
-
-.company-note {
-    color: #6a7282;
-}
-
 h1 {
     color: #101828;
     font-size: 1.5rem;
@@ -317,7 +309,6 @@ footer a:hover {
     }
 
     .description,
-    .company-note,
     nav a,
     footer,
     footer a {
