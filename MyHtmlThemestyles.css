@@ -67,7 +67,45 @@ nav a.selected {
 
 .description {
     color: #4a5565;
+    margin-bottom: 1rem;
+}
+
+.profile-links {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
     margin-bottom: 2rem;
+}
+
+.icon-link {
+    align-items: center;
+    border: 1px solid #e5e7eb;
+    border-radius: 999px;
+    color: #4a5565;
+    display: inline-flex;
+    height: 2.25rem;
+    justify-content: center;
+    width: 2.25rem;
+}
+
+.icon-link:hover {
+    border-color: #99a1af;
+    color: #101828;
+    text-decoration: none;
+}
+
+.icon-link img {
+    height: 1.1rem;
+    width: 1.1rem;
+}
+
+.company-link {
+    font-size: 0.95rem;
+}
+
+.company-note {
+    color: #6a7282;
 }
 
 h1 {
@@ -279,15 +317,26 @@ footer a:hover {
     }
 
     .description,
+    .company-note,
     nav a,
     footer,
     footer a {
         color: #99a1af;
     }
 
+    .icon-link {
+        border-color: #1e2939;
+        color: #99a1af;
+    }
+
+    .icon-link:hover,
     nav a.selected,
     footer a:hover {
         color: #f3f4f6;
+    }
+
+    .icon-link img {
+        filter: invert(1);
     }
 
     a {
