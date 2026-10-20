@@ -4,7 +4,7 @@
   --font-size-label: 0.6875rem;
   --font-size-meta: 0.75rem;
   --font-size-nav: 0.8125rem;
-  --font-size-code: 0.8438rem;
+  --font-size-code: 0.875rem;
   --font-size-excerpt: 0.8438rem;
   --font-size-sm: 0.875rem;
   --font-size-site-name: 0.9375rem;
@@ -22,6 +22,7 @@
   --line-height-normal: 1.7;
   --line-height-compact: 1.6;
   --line-height-heading: 1.5;
+  --line-height-code: 1.75;
   --letter-spacing-label: 2.6px;
   --letter-spacing-site-name: 1.8px;
   --letter-spacing-meta: 1.2px;
@@ -110,7 +111,7 @@
   --typography-code-font-size: var(--font-size-code);
   --typography-code-font-weight: var(--font-weight-regular);
   --typography-code-font-style: normal;
-  --typography-code-line-height: var(--line-height-compact);
+  --typography-code-line-height: var(--line-height-code);
   --typography-code-letter-spacing: var(--letter-spacing-none);
   --space-2xs: 0.375rem;
   --space-xs: 0.625rem;
@@ -151,6 +152,13 @@
   --color-shadow: #3D465114;
   --color-shadow-hover: #3D46512E;
   --color-accent-faint: #2F5FC41F;
+  --color-syntax-keyword: #2F5FC4;
+  --color-syntax-string: #3B7A57;
+  --color-syntax-comment: #6A727C;
+  --color-syntax-function: #7B4DB3;
+  --color-syntax-constant: #B25A2E;
+  --color-syntax-punctuation: #6B7480;
+  --color-diagram-node: #FFFFFF;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -170,6 +178,13 @@
     --color-shadow: #00000059;
     --color-shadow-hover: #00000080;
     --color-accent-faint: #7EA2F229;
+    --color-syntax-keyword: #8FB0F5;
+    --color-syntax-string: #8FCBA4;
+    --color-syntax-comment: #8A939D;
+    --color-syntax-function: #C1A5EE;
+    --color-syntax-constant: #E6A77D;
+    --color-syntax-punctuation: #9AA3AD;
+    --color-diagram-node: #232A33;
   }
 }
 
@@ -1659,7 +1674,7 @@ body:not(.page-home) main.column {
     justify-content: space-between;
 }
 
-.label {
+.section-label {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -1671,7 +1686,7 @@ body:not(.page-home) main.column {
     text-transform: uppercase;
 }
 
-.label::before {
+.section-label::before {
     content: "";
     width: 5px;
     height: 5px;
@@ -2151,20 +2166,131 @@ time {
     font-size: 0.86em;
 }
 
-.content pre {
+/* Code and Mermaid blocks, written by scripts/highlight. */
+
+.code-block,
+.mermaid-block {
     margin: 28px 0;
-    padding: var(--space-md) 20px;
-    overflow-x: auto;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-code);
-    background: var(--color-code-surface);
+    background: var(--color-surface);
+}
+
+.code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    min-height: 38px;
+    padding: 0 12px 0 18px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.code-language {
+    color: var(--color-text-muted);
+    font-size: var(--typography-label-font-size);
+    font-weight: var(--typography-label-font-weight);
+    letter-spacing: var(--typography-meta-letter-spacing);
+    text-transform: uppercase;
+}
+
+.code-copy,
+.mermaid-toggle button {
+    padding: 3px 10px;
+    border: 0;
+    border-radius: var(--radius-full);
+    background: transparent;
+    color: var(--color-text-secondary);
+    font: inherit;
+    font-size: var(--typography-meta-font-size);
+    cursor: pointer;
+    transition:
+        background-color var(--duration-fast) ease-out,
+        color var(--duration-fast) ease-out;
+}
+
+.code-copy {
+    margin-left: auto;
+}
+
+.code-copy:hover,
+.mermaid-toggle button:hover {
+    color: var(--color-accent);
+}
+
+.code-copy:focus-visible,
+.mermaid-toggle button:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 1px;
+}
+
+.mermaid-toggle {
+    display: flex;
+    gap: 2px;
+    margin-left: auto;
+    padding: 2px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+}
+
+.mermaid-toggle[hidden] {
+    display: none;
+}
+
+.mermaid-toggle button[aria-pressed="true"] {
+    background: var(--color-accent-faint);
+    color: var(--color-accent);
+}
+
+.content pre {
+    margin: 0;
+    padding: var(--space-md) 22px;
+    overflow-x: auto;
+    font-family: var(--typography-code-font-family);
     font-size: var(--typography-code-font-size);
     line-height: var(--typography-code-line-height);
+    tab-size: 4;
 }
 
 .content pre code {
     padding: 0;
     background: transparent;
     font-size: inherit;
+}
+
+/* Shiki's CSS variable theme, colored by the syntax tokens. */
+.shiki {
+    --shiki-foreground: var(--color-text);
+    --shiki-background: transparent;
+    --shiki-token-keyword: var(--color-syntax-keyword);
+    --shiki-token-string: var(--color-syntax-string);
+    --shiki-token-string-expression: var(--color-syntax-string);
+    --shiki-token-comment: var(--color-syntax-comment);
+    --shiki-token-function: var(--color-syntax-function);
+    --shiki-token-constant: var(--color-syntax-constant);
+    --shiki-token-parameter: var(--color-text);
+    --shiki-token-punctuation: var(--color-syntax-punctuation);
+    --shiki-token-link: var(--color-accent);
+    color: var(--shiki-foreground);
+}
+
+.mermaid-diagram {
+    padding: var(--space-lg) 22px;
+    overflow-x: auto;
+    text-align: center;
+}
+
+.mermaid-diagram svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Rounded nodes, as in the Penpot spec. */
+.mermaid-diagram .node rect,
+.mermaid-diagram .cluster rect {
+    rx: 8px;
+    ry: 8px;
 }
 
 .content blockquote {
