@@ -62,11 +62,16 @@ ul {
     list-style: none;
 }
 
+/* Header, footer and home use the wide column; reading pages keep a narrower text column. */
 .column {
     position: relative;
-    max-width: calc(var(--size-content) + 2 * var(--size-gutter));
+    max-width: calc(var(--size-wide) + 2 * var(--size-gutter));
     margin: 0 auto;
     padding: 0 var(--size-gutter);
+}
+
+body:not(.page-home) main.column {
+    max-width: calc(var(--size-content) + 2 * var(--size-gutter));
 }
 
 /* Header and footer */
@@ -156,7 +161,7 @@ ul {
     margin-top: var(--space-3xl);
 }
 
-.page-home .section:first-child {
+.page-home .home-layout > .section:first-child {
     margin-top: var(--space-5xl);
 }
 
@@ -650,6 +655,46 @@ time {
     font-size: var(--typography-nav-font-size);
 }
 
+/* Home: main column with profile and RSS in a sidebar */
+
+@media (min-width: 961px) {
+    .home-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) var(--size-sidebar);
+        grid-template-rows: auto 1fr auto;
+        grid-template-areas:
+            "main profile"
+            "main rss"
+            "tags .";
+        column-gap: var(--space-3xl);
+        align-items: start;
+    }
+
+    .home-main {
+        grid-area: main;
+    }
+
+    /* Pinned starts the main column, so it lines up with the profile. */
+    .page-home .home-main > .section:first-child {
+        margin-top: var(--space-5xl);
+    }
+
+    .section.profile {
+        grid-area: profile;
+    }
+
+    .section.rss {
+        grid-area: rss;
+        align-items: flex-start;
+        padding: 0;
+        text-align: left;
+    }
+
+    .section.tags {
+        grid-area: tags;
+    }
+}
+
 /* Small screens */
 
 @media (max-width: 640px) {
@@ -666,7 +711,7 @@ time {
         gap: 20px;
     }
 
-    .page-home .section:first-child,
+    .page-home .home-layout > .section:first-child,
     .page-header {
         margin-top: var(--space-3xl);
     }
